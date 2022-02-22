@@ -8,16 +8,17 @@ class ApplicationController < Sinatra::Base
 
   get '/students' do
     students = Student.order(class_year: :asc, last_name: :asc)
-    students.to_json
+    students.to_json(include: :courses)
   end
 
   get '/courses' do
     courses = Course.order(:title)
-    courses.to_json
+    courses.to_json(include: :department)
   end
 
   get '/departments' do
     departments = Department.order(:name)
-    departments.to_json
+    departments.to_json(include: :courses)
   end
+
 end

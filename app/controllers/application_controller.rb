@@ -8,17 +8,25 @@ class ApplicationController < Sinatra::Base
 
   get '/students' do
     students = Student.order(class_year: :asc, last_name: :asc)
-    students.to_json(include: :courses)
+    students.to_json(only: [:id, :first_name, :last_name, :class_year], include: { 
+      student_courses: { only: [:grade], include: {
+         course: { only: [:title] }
+      } } 
+    })
   end
 
   get '/courses' do
     courses = Course.order(:title)
-    courses.to_json(include: :department)
+    courses.to_json(only: [:id, :title, :description], include: {
+      department: { only: [:name] }
+    })
   end
 
   get '/departments' do
     departments = Department.order(:name)
-    departments.to_json(include: :courses)
+    departments.to_json(only: [:id, :name], include: {
+      courses: { only: [:title] }
+    })
   end
 
 end

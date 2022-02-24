@@ -15,6 +15,31 @@ class ApplicationController < Sinatra::Base
     })
   end
 
+  patch '/students/:id' do
+    student = Student.find(params[:id])
+    student.update(
+      first_name: params[:first_name],
+      last_name: params[:last_name],
+      class_year: params[:class_year]
+    )
+    student.to_json
+  end
+
+  post '/students' do
+    student = Student.create(
+      first_name: params[:first_name],
+      last_name: params[:last_name],
+      class_year: params[:class_year]
+    )
+    student.to_json
+  end
+
+  delete '/students/:id' do
+    student = Student.find(params[:id])
+    student.destroy
+    student.to_json
+  end
+
   get '/courses' do
     courses = Course.order(:title)
     courses.to_json(only: [:id, :title, :description], include: {

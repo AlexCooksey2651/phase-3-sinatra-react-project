@@ -30,7 +30,11 @@ class ApplicationController < Sinatra::Base
       last_name: params[:last_name],
       class_year: params[:class_year]
     )
-    student.to_json
+    student.to_json(only: [:first_name, :last_name, :class_year], include: { 
+      student_courses: { only: [:grade], include: {
+         course: { only: [:title] }
+      } } 
+    })
   end
 
   delete '/students/:id' do

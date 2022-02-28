@@ -1,6 +1,6 @@
-# OFFICE OF THE REGISTRAR AT POKEMON ACADEMY
+# OFFICE OF THE REGISTRAR AT POKEMON ACADEMY!
 ## Alex Cooksey, Flatiron School Phase 3 Final Project
-### FRONTEND REPO
+#### Frontend Repository:
 [View Frontend Resository Here](https://github.com/AlexCooksey2651/phase-3-final-project-course-catalog-frontend)
 
 ## Introduction
@@ -22,6 +22,8 @@ When loading the backend, you can create data from the `seeds.rb` file by runnin
 
 #### HOME
 The home page loads simple HTML text intended to help users navigate the page. 
+
+---
 
 #### STUDENTS
 When selected, the Students page loads the `StudentContainer.js` component. At the top, this loads:
@@ -183,6 +185,8 @@ patch '/students/:id' do
 end
 ```
 
+---
+
 #### COURSES
 The collection of courses is rendered in a fashion similar to the collection of students. 
 
@@ -246,6 +250,8 @@ The `deptOrder` variable in state allows a binary decision of whether or order t
 The "Sort By Name" and "Sort By Popularity" buttons function in the same way.
 
 Each `courseCard` - contained in the `Course` component - houses an "Edit Course Description" button that, when clicked, displays a form to update the `description` key of the `course` object. This form and its corresponding patch request and backend route are essentially identical to the "Edit Student Information" functionality on the Students page. 
+
+---
 
 #### DEPARTMENTS
 On page load, the collection of departments is retrieved with a familiar `get` request; in order to retrieve each departments' courses, the backend route has to provide the matching courses through the `include` command.

@@ -1,119 +1,279 @@
-# FRONTEND REPO
-[FrontEnd Repo](https://github.com/AlexCooksey2651/phase-3-final-project-course-catalog-frontend)
-
-## Learning Goals
-
-- Build a web basic API with Sinatra and Active Record to support a React
-  frontend
+# OFFICE OF THE REGISTRAR AT POKEMON ACADEMY
+## Alex Cooksey, Flatiron School Phase 3 Final Project
+### FRONTEND REPO
+[View Frontend Resository Here](https://github.com/AlexCooksey2651/phase-3-final-project-course-catalog-frontend)
 
 ## Introduction
+This app is designed to emulate a page that would be used by a school administrator. The frontend is built with HTML, CSS, and React, while the backend is built with Ruby and Sinatra. 
 
-Congrats on getting through all the material for Phase 3! Now's the time to put
-it all together and build something from scratch to reinforce what you know and
-expand your horizons.
+The Home page gives a brief overview of functionality and helps the user navigate the app. 
 
-The focus of this project is **building a Sinatra API backend** that uses
-**Active Record** to access and persist data in a database, which will be used
-by a separate **React frontend** that interacts with the database via the API.
+Within the Students page, the user can view current students and their information (name, class year, and the 4 courses they are enrolled in along with their corresponding grade in each course). Students can be filtered by class year using a dropdown menu, and/or searched by name. Student information may be edited using the "Edit Student Information" button, and a new student may be added using the "Add New Student" button near the top of the page. Individual students can also be deleted if desired.
 
-## Requirements
+The Courses page allows the user to view all current courses; along with the course title, users can read a brief description and see which department the course belongs to. The number of students enrolled is also displayed. Courses can be sorted by name, department, or popularity (i.e. student enrollment); when clicked a second time, the button reverses the sort order.
 
-For this project, you must:
+The Departments page displays each of the five academic departments. Users have the option to click a "Show Course List" button to view all current courses within that particular department.
 
-- Use Active Record to interact with a database.
-- Have a minimum of two models with a one-to-many relationship.
-- Create API routes in Sinatra that handles at least three different CRUD
-  actions for at least one of your Active Record models.
-- Build a separate React frontend application that interacts with the API to
-  perform CRUD actions.
-- Use good OO design patterns. You should have separate classes for each of your
-  models, and create instance and class methods as necessary.
+## Technical Overview
 
-For example, build a todo list application with a React frontend interface and a
-Sinatra backend API, where a user can:
+Once you have opened the proper folder folder for the frontend, you can load it in the browswer by typing in `npm start`. You may need to install the `react-router-dom` in order for the navigation bar to work. Specifically, you can use version 5 so that the `Switch` function works (newer versions use `Router` instead) by entering `npm install react-router-dom@5`.
 
-- **Create** a new todo
-- **Read** a list of all todos
-- **Update** an individual todo
-- **Delete** a todo
+When loading the backend, you can create data from the `seeds.rb` file by running `bundle exec rake db:seed` and get the server up and running by entering `bundle exec rake server`. In order for the frontend to run properly, you'll want this to load on "localhost:9292". Once the server is up and running, data for students may be found at "localhost:9292/students"; course and department data can be seen at analogous endpoints ("/courses" or "/departments").
 
-A `Todo` can be tagged with a `Category`, so that each todo _belongs to_ a
-category and each category _has many_ todos.
 
-## Getting Started
+#### HOME
+The home page loads simple HTML text intended to help users navigate the page. 
 
-### Backend Setup
+#### STUDENTS
+When selected, the Students page loads the `StudentContainer.js` component. At the top, this loads:
+    - An input field to allow users to search students by name
+    - A dropdown menu that allows users to filter students by class year (or view all)
+    - An "Add New Student" button that allows a form to be conditionally rendered. When filled out, this form allows another student to be added to the display.
 
-This repository has all the starter code needed to get a Sinatra backend up and
-running. [**Fork and clone**][fork link] this repository to get started. Then, run
-`bundle install` to install the gems.
+The `StudentContainer` component is responsible for rendering "Student Cards" (i.e. the `Student` component) based on user input. 
 
-[fork link]: https://github.com/learn-co-curriculum/phase-3-sinatra-react-project/fork
-
-The `app/controllers/application_controller.rb` file has an example GET route
-handler. Replace this route with routes for your project.
-
-You can start your server with:
-
-```console
-$ bundle exec rake server
+The entire collection of students in the database is retrieved on page load as follows: 
+```
+useEffect(() => {
+    fetch('http://localhost:9292/students')
+        .then(response => response.json())
+        .then(students => setStudents(students))
+}, [])
 ```
 
-This will run your server on port
-[http://localhost:9292](http://localhost:9292).
-
-### Frontend Setup
-
-Your backend and your frontend should be in **two different repositories**.
-
-Create a new repository in a **separate folder** with a React app for your
-frontend. `cd` out of the backend project directory, and use
-[create-react-app][] to generate the necessary code for your React frontend:
-
-```console
-$ npx create-react-app my-app-frontend
+On the backend, this corresponds to the following `get` request in the `app/controllers/application_controller.rb` file: 
+```
+get '/students' do
+    students = Student.order(class_year: :asc, last_name: :asc)
+    students.to_json(only: [:id, :first_name, :last_name, :class_year], include: { 
+        student_courses: { only: [:grade], include: {
+            course: { only: [:title] }
+        } } 
+    })
+end
 ```
 
-After creating the project locally, you should also
-[create a repository on GitHub][create repo] to host your repo and help
-collaborate, if you're working with a partner.
+If a user clicks the "Add New Student" button, fills out the form, and submits it, a post request is triggered to add this student to the collection. This is handled in the `AddStudentForm` component: 
+```
+const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [classYear, setClassYear] = useState("")
 
-### Fetch Example
+  const body = {
+      first_name: firstName,
+      last_name: lastName,
+      class_year: classYear
+  }
 
-Your React app should make fetch requests to your Sinatra backend! Here's an
-example:
-
-```js
-fetch("http://localhost:9292/test")
-  .then((r) => r.json())
-  .then((data) => console.log(data));
+  function addNewStudent(event) {
+    event.preventDefault()
+    fetch("http://localhost:9292/students", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+    })
+        .then(response => response.json())
+        .then(newStudent => {
+            handleNewStudent(newStudent);
+        });
+    setFirstName("");
+    setLastName("");
+    setClassYear("")
+}
 ```
 
-## Project Tips
+In the backend `application_contoller` file, this is handled with the following route:
+```
+post '/students' do
+    student = Student.create(
+      first_name: params[:first_name],
+      last_name: params[:last_name],
+      class_year: params[:class_year]
+    )
+    student.to_json
+end
+```
 
-- This project is intended to focus more on the backend than the frontend, so
-  try and keep the React side of things relatively simple. Focus on working with
-  Active Record and performing CRUD actions. What are some interesting queries you can write? What kinds of questions can you ask of your data?
-- Once you have a project idea, come up with a domain model and decide what
-  relationships exist between the models in your application. Use a tool like
-  [dbdiagram.io][] to help visualize your models.
-- Decide on your API endpoints. What data should they return? What kind of CRUD
-  action should they perform? What data do they need from the client?
-- Use [Postman][postman download] to test your endpoints.
-- Use `binding.pry` to debug your requests on the server. It's very helpful to use a
-  `binding.pry` in your controller within a route to see what `params` are being
-  sent.
-- Use the [Network Tab in the Dev Tools][network tab] in the frontend to debug
-  your requests.
+On the frontend, the user should be able to view the courses students are enrolled in and their corresponding grade in each course, therefore the get request must retrieve information from other database tables. The `student_courses` table represents the join table creating the "many-to-many" relationship between students and courses, and contains the `grade` information for each student-course relationship.
 
-## Resources
+To filter students by class year, a variable - `filteredStudents` is declared as an arrow function as shown below:
+```
+const filteredStudents = () => {
+    if (selectedYear !== "") {
+        const singleClass = students.filter(student => {
+            return student.class_year === parseInt(selectedYear)
+        })
+        return singleClass
+    } else { 
+        return students
+    }
+}
+```
 
-- [create-react-app][]
-- [dbdiagram.io][]
-- [Postman][postman download]
+If the "All" selection is made, the original collection of students is rendered; otherwise, only students with the proper class year are returned. 
+The functionality for the search bar is built like so: 
 
-[create-react-app]: https://create-react-app.dev/docs/getting-started
-[create repo]: https://docs.github.com/en/get-started/quickstart/create-a-repo
-[dbdiagram.io]: https://dbdiagram.io/
-[postman download]: https://www.postman.com/downloads/
-[network tab]: https://developer.chrome.com/docs/devtools/network/
+```
+const searchedStudents = filteredStudents().filter(student => {
+    if (student.first_name.toLowerCase().includes(searchText.toLowerCase()) || student.last_name.toLowerCase().includes(searchText.toLowerCase())) {
+            return student
+    }
+})
+``` 
+
+This allows students to search by first or last name, and also ensures that the search is not case-sensitive. `searchText` is a variable that lives in state and corresponds to the content of the input field. By manipulating the array corresponding to `filteredStudents()` instead of the original `students` variable that lives in state, we allow users to perform the search and filter functions simultaenously. 
+
+Ultimately, student cards are then rendered by mapping over the `searchedStudents` array. 
+
+Finally, the `StudentContainer` component owns the functionality to update the `students` variable in state after a user has edited student information, deleted a student, or added a new student. 
+
+The `Student` component houses the `delete` request that is executed if a user clicks the `Delete Student` button:
+```
+function handleDeleteStudent(event) {
+    fetch(`http://localhost:9292/students/${id}`, {
+        method: "DELETE",
+    })
+    onDeleteStudent(id)
+}
+```
+
+The `id` variable is taken from the `student` variable, an object representing an individual student, which has been passed down as props from the `StudentContainer` file. 
+
+On the backend, the `application_contoller` file handles this request as follows: 
+```
+ delete '/students/:id' do
+    student = Student.find(params[:id])
+    student.destroy
+    student.to_json
+end
+```
+
+If a user clicks the "Edit Student Information" button, a form (housed in the `EditStudentForm` component) is rendered. The form can be hidden again by reclicking this same button. If the form is submitted, a `patch` request is triggered to update the student information on the backend. 
+```
+function handleEditStudent(event) {
+    event.preventDefault()
+    fetch(`http://localhost:9292/students/${id}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+    })
+        .then(response => response.json())
+        .then(updatedStudent => {
+            onEditStudent(updatedStudent)
+        })
+}
+```
+
+The corresponding backend route is as follows: 
+```
+patch '/students/:id' do
+    student = Student.find(params[:id])
+    student.update(
+      first_name: params[:first_name],
+      last_name: params[:last_name],
+      class_year: params[:class_year]
+    )
+    student.to_json
+end
+```
+
+#### COURSES
+The collection of courses is rendered in a fashion similar to the collection of students. 
+
+Clicking "Courses" in the nav bar loads the `CourseContainer` component, which loads all courses with a `get` request:
+```
+useEffect(() => {
+    fetch('http://localhost:9292/courses')
+        .then(response => response.json())
+        .then(courses => setCourses(courses))
+}, [])
+```
+
+On the backend: 
+```
+get '/courses' do
+    courses = Course.order(:title)
+    courses.to_json(only: [:id, :title, :description], include: {
+      department: { only: [:name] }, 
+      student_courses: { only: [:student_id] }
+    })    
+end
+```
+
+Note that the get request dictates that by default, courses load already alphabetized by title (in A-Z order). 
+
+Three different buttons are shown, each corresponding to a different sorting option - Name, Department, or Popularity. Here we see the "Sort by Department" code as an example:
+```
+function CourseContainer() {
+    const [deptOrder, setDeptOrder] = useState(true)
+
+    ...
+
+    function sortByDepartment() {
+        const sortedCourses = [...courses].sort((a, b) => {
+            let deptA = a.department.name
+            let deptB = b.department.name
+            if (deptOrder === true) {
+                if (deptA < deptB) {
+                    return -1
+                } else if (deptA > deptB) {
+                    return 1
+                }
+                return 0
+            } else if (deptOrder === false) {
+                if (deptA < deptB) {
+                    return 1
+                } else if (deptA > deptB) {
+                    return -1
+                }
+                return 0
+            }
+        })
+        setDeptOrder(!deptOrder)
+        setCourses(sortedCourses)
+    }
+}
+```
+
+The `deptOrder` variable in state allows a binary decision of whether or order the courses in ascending or descending order. The `sortByDepartment` function sorts courses based on the department name, in A-Z order if the `deptOrder` is set to `true` and Z-A order if `false`. To ensure reversibility, state is updated to switch `deptOrder` and updates the courses so that the courses are rendered in the correct order (handled by a map method that creates Course cards).
+
+The "Sort By Name" and "Sort By Popularity" buttons function in the same way.
+
+Each `courseCard` - contained in the `Course` component - houses an "Edit Course Description" button that, when clicked, displays a form to update the `description` key of the `course` object. This form and its corresponding patch request and backend route are essentially identical to the "Edit Student Information" functionality on the Students page. 
+
+#### DEPARTMENTS
+On page load, the collection of departments is retrieved with a familiar `get` request; in order to retrieve each departments' courses, the backend route has to provide the matching courses through the `include` command.
+
+Frontend:
+```
+const [departments, setDepartments] = useState([])
+    
+useEffect(() => {
+fetch('http://localhost:9292/departments')
+        .then(response => response.json())
+        .then(departments => setDepartments(departments))
+}, [])
+```
+
+Backend:
+```
+get '/departments' do
+    departments = Department.order(:name)
+    departments.to_json(only: [:id, :name], include: {
+      courses: { only: [:title] }
+    })
+end
+```
+
+
+
+
+
+
+
+
+

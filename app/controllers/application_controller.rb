@@ -42,14 +42,12 @@ class ApplicationController < Sinatra::Base
 
   get '/courses' do
     courses = Course.order(:title)
-    # courses.to_json(only: [:id, :title, :description], include: {
-    #   department: { only: [:name] } { student_course: { only: [:student_id] } 
-    # })
     courses.to_json(only: [:id, :title, :description], include: {
       department: { only: [:name] }, 
       student_courses: { only: [:student_id] }
-    })
+    })    
   end
+  # courses.to_json(include: :department, :student_courses)
 
   patch '/courses/:id' do
     course = Course.find(params[:id])

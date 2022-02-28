@@ -269,6 +269,29 @@ get '/departments' do
 end
 ```
 
+Within each Department card (housed in the `Department` component), a user can click the "Show Course List" button to render the `DepartmentCourseList` component, a list of each department's available courses. The button changes the `showCourseList` variable in state; this variable's value is a boolean. When `true` the courses appear.
+
+Within the `DepartmentCourseList` component:
+```
+let courseTitles = []
+courses.map(course => {
+    courseTitles.push(course["title"])
+})
+const courseList = courseTitles.join(', ')
+```
+
+## Resources:
+This application was built with HTML, CSS, React, Ruby, and Sinatra. 
+
+[Blog Post](url)
+
+[Video Walkthrough](url)
+
+Background Image on "Students Page" found [here](https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/39cb06a2-39b2-4b54-8efa-c294fab1e52c/ddumeg9-af81320c-fba3-4dbb-af44-7bfcd61f2bb5.jpg/v1/fill/w_5000,h_2813,q_75,strp/151_pokemon_wallpaper_by_drums107_ddumeg9-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MjgxMyIsInBhdGgiOiJcL2ZcLzM5Y2IwNmEyLTM5YjItNGI1NC04ZWZhLWMyOTRmYWIxZTUyY1wvZGR1bWVnOS1hZjgxMzIwYy1mYmEzLTRkYmItYWY0NC03YmZjZDYxZjJiYjUuanBnIiwid2lkdGgiOiI8PTUwMDAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.cR6bbHgUn3vFyXPghMN-i8cXkfCcmJtvRpqlZHtD9fU)
+
+Background map image for webpage found [here](https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/96a6e381769399.5d096fa30e358.jpg)
+
+
 
 
 

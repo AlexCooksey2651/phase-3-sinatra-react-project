@@ -29,7 +29,7 @@ end
 Student.all.each do |student|
     4.times do
         student.student_courses.create(
-            grade: rand(0..100),
+            grade: rand(60..100),
             course_id: Course.all.sample.id
         )
     end

@@ -47,14 +47,14 @@ class ApplicationController < Sinatra::Base
       student_courses: { only: [:student_id] }
     })    
   end
-  # courses.to_json(include: :department, :student_courses)
+  
 
   patch '/courses/:id' do
     course = Course.find(params[:id])
     course.update(
       description: params[:description]
     )
-    course.to_json
+    course.to_json(include: [:student_courses, :department])
   end
 
   get '/departments' do

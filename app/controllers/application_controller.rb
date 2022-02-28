@@ -1,10 +1,5 @@
 class ApplicationController < Sinatra::Base
   set :default_content_type, 'application/json'
-  
-  # Add your routes here
-  # get "/" do
-  #   { message: "Good luck with your project!" }.to_json
-  # end
 
   get '/students' do
     students = Student.order(class_year: :asc, last_name: :asc)
@@ -22,7 +17,11 @@ class ApplicationController < Sinatra::Base
       last_name: params[:last_name],
       class_year: params[:class_year]
     )
-    student.to_json
+    student.to_json(only: [:id, :first_name, :last_name, :class_year], include: { 
+      student_courses: { only: [:grade], include: {
+         course: { only: [:title] }
+      } } 
+    })
   end
 
   post '/students' do

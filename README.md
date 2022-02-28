@@ -20,7 +20,6 @@ Once you have opened the proper folder folder for the frontend, you can load it 
 
 When loading the backend, you can create data from the `seeds.rb` file by running `bundle exec rake db:seed` and get the server up and running by entering `bundle exec rake server`. In order for the frontend to run properly, you'll want this to load on "localhost:9292". Once the server is up and running, data for students may be found at "localhost:9292/students"; course and department data can be seen at analogous endpoints ("/courses" or "/departments").
 
-
 #### HOME
 The home page loads simple HTML text intended to help users navigate the page. 
 
@@ -75,9 +74,7 @@ const [firstName, setFirstName] = useState("")
         body: JSON.stringify(body),
     })
         .then(response => response.json())
-        .then(newStudent => {
-            handleNewStudent(newStudent);
-        });
+        .then(newStudent => handleNewStudent(newStudent))
     setFirstName("");
     setLastName("");
     setClassYear("")
@@ -92,7 +89,11 @@ post '/students' do
       last_name: params[:last_name],
       class_year: params[:class_year]
     )
-    student.to_json
+    student.to_json(only: [:first_name, :last_name, :class_year], include: { 
+      student_courses: { only: [:grade], include: {
+         course: { only: [:title] }
+      } } 
+    })
 end
 ```
 
@@ -114,7 +115,6 @@ const filteredStudents = () => {
 
 If the "All" selection is made, the original collection of students is rendered; otherwise, only students with the proper class year are returned. 
 The functionality for the search bar is built like so: 
-
 ```
 const searchedStudents = filteredStudents().filter(student => {
     if (student.first_name.toLowerCase().includes(searchText.toLowerCase()) || student.last_name.toLowerCase().includes(searchText.toLowerCase())) {
@@ -162,9 +162,7 @@ function handleEditStudent(event) {
         body: JSON.stringify(body),
     })
         .then(response => response.json())
-        .then(updatedStudent => {
-            onEditStudent(updatedStudent)
-        })
+        .then(updatedStudent => onEditStudent(updatedStudent))
 }
 ```
 
@@ -177,7 +175,11 @@ patch '/students/:id' do
       last_name: params[:last_name],
       class_year: params[:class_year]
     )
-    student.to_json
+    student.to_json(only: [:id, :first_name, :last_name, :class_year], include: { 
+      student_courses: { only: [:grade], include: {
+         course: { only: [:title] }
+      } } 
+    })
 end
 ```
 

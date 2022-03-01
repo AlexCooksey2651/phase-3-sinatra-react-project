@@ -291,7 +291,7 @@ const courseList = courseTitles.join(', ')
 ## Resources:
 This application was built with HTML, CSS, React, Ruby, and Sinatra. 
 
-[Blog Post](url)
+[Blog Post](https://medium.com/@aecooksey2651/pok%C3%A9mon-academy-office-of-the-registrar-challenges-of-building-my-first-full-stack-web-app-317bdaa7fa65)
 
 [Video Walkthrough](https://youtu.be/HnFy_D4y83s)
 

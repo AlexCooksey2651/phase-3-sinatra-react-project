@@ -293,7 +293,7 @@ This application was built with HTML, CSS, React, Ruby, and Sinatra.
 
 [Blog Post](https://medium.com/@aecooksey2651/pok%C3%A9mon-academy-office-of-the-registrar-challenges-of-building-my-first-full-stack-web-app-317bdaa7fa65)
 
-[Video Walkthrough](https://youtu.be/HnFy_D4y83s)
+[Video Walkthrough](https://youtu.be/VtlTGcPK8cc)
 
 Background Image on "Students Page" found [here](https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/39cb06a2-39b2-4b54-8efa-c294fab1e52c/ddumeg9-af81320c-fba3-4dbb-af44-7bfcd61f2bb5.jpg/v1/fill/w_5000,h_2813,q_75,strp/151_pokemon_wallpaper_by_drums107_ddumeg9-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MjgxMyIsInBhdGgiOiJcL2ZcLzM5Y2IwNmEyLTM5YjItNGI1NC04ZWZhLWMyOTRmYWIxZTUyY1wvZGR1bWVnOS1hZjgxMzIwYy1mYmEzLTRkYmItYWY0NC03YmZjZDYxZjJiYjUuanBnIiwid2lkdGgiOiI8PTUwMDAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.cR6bbHgUn3vFyXPghMN-i8cXkfCcmJtvRpqlZHtD9fU)
 

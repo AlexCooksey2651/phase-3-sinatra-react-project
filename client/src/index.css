@@ -1,0 +1,147 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/96a6e381769399.5d096fa30e358.jpg")
+}
+
+/* code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+} */
+
+#header {
+  text-align: center;
+  color: black;
+  width: 80%;
+  background-color: antiquewhite;
+  margin: auto;
+  font-size: 2.0em;
+  font-family:Verdana, Geneva, Tahoma, sans-serif
+}
+
+#navBar {
+  text-align: center;
+  background-color: burlywood;
+  width: 80%;
+  height: 70px;
+  margin: auto;
+  border: solid black 1px;
+  font-size: 1.5em;
+}
+
+#home, #studentContainer, #courseContainer, #departmentContainer {
+  background-color: moccasin;
+  width: 77.5%;
+  text-align: center;
+  margin: auto;
+  padding: 20px
+}
+
+.studentCard, .courseCard {
+  text-align: left;
+  width: 80%;
+  margin: 20px auto;
+  border: solid lightsalmon 1px;
+  padding: 10px 30px;
+  border-radius: 4px;
+  background-color: moccasin;
+}
+
+.departmentCard {
+  text-align: center;
+  width: 60%;
+  margin: 20px auto;
+  border: solid lightsalmon 4px;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+#studentContainer {
+  background-image: url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/39cb06a2-39b2-4b54-8efa-c294fab1e52c/ddumeg9-af81320c-fba3-4dbb-af44-7bfcd61f2bb5.jpg/v1/fill/w_5000,h_2813,q_75,strp/151_pokemon_wallpaper_by_drums107_ddumeg9-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MjgxMyIsInBhdGgiOiJcL2ZcLzM5Y2IwNmEyLTM5YjItNGI1NC04ZWZhLWMyOTRmYWIxZTUyY1wvZGR1bWVnOS1hZjgxMzIwYy1mYmEzLTRkYmItYWY0NC03YmZjZDYxZjJiYjUuanBnIiwid2lkdGgiOiI8PTUwMDAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.cR6bbHgUn3vFyXPghMN-i8cXkfCcmJtvRpqlZHtD9fU");
+}
+
+.courseList h4 {
+  font-size: 1.2em;
+}
+
+#studentSearch {
+  width: 300px;
+  margin: 30px;
+  display: inline;
+  padding: 5px;
+  font-size: 1.5em;
+  color: white;
+  background-color: darkslategray
+}
+
+#deptSortBtn, 
+#titleSortBtn, 
+#enrollmentSortBtn {
+  height: 50px;
+  width: 250px;
+  font-size: 1.5em;
+  background-color: darkslategray;
+  color: white;
+  border-radius: 3%;
+  margin: 0px 10px 
+}
+
+#home p {
+  font-size: 1.2em;
+  margin: 40px
+}
+
+#addStudentBtn, 
+.editStudentBtn,
+.editCourseBtn, 
+.deleteStudentBtn, 
+.updateStudentBtn,
+.showCoursesBtn {
+  background-color: darkslategray;
+  color: white;
+  border-radius: 3%;
+  height: 40px;
+  width: 300px;
+  font-size: 1.0em;
+  padding: 10px;
+  align-items: center;
+}
+
+.classYearFilter {
+  font-size: 1.5em;
+  color: white;
+  background-color: darkslategray;
+  padding: 5px;
+}
+
+#addStudentForm {
+  font-size: 1.5em;
+  color: white;
+  background-color: darkslategray;
+  padding: 10px;
+  width: 30%;
+  margin: auto;
+}
+
+#editStudentForm, #editCourseForm {
+  font-size: 1.1em;
+  padding: 5px;
+}
+
+.departmentCard h1,
+.departmentCard button {
+  display: inline;
+  padding: 20px;
+}
+
+.departmentCard button {
+  align-content: center;
+}
+
+.studentCourse {
+  padding: 10px;
+}

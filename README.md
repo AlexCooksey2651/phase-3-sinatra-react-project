@@ -1,7 +1,5 @@
 # OFFICE OF THE REGISTRAR AT POKEMON ACADEMY!
 ## Alex Cooksey, Flatiron School Phase 3 Final Project
-#### Frontend Repository:
-[View Frontend Resository Here](https://github.com/AlexCooksey2651/phase-3-final-project-course-catalog-frontend)
 
 ## Introduction
 This app is designed to emulate a page that would be used by a school administrator. The frontend is built with HTML, CSS, and React, while the backend is built with Ruby and Sinatra. 
@@ -16,7 +14,7 @@ The Departments page displays each of the five academic departments. Users have 
 
 ## Technical Overview
 
-Once you have opened the proper folder folder for the frontend, you can load it in the browswer by typing in `npm start`. You may need to install the `react-router-dom` in order for the navigation bar to work. Specifically, you can use version 5 so that the `Switch` function works (newer versions use `Router` instead) by entering `npm install react-router-dom@5`.
+To open the app in your browser, enter `npm start --prefix client`. The frontend may be viewed by navigating to the `client` folder. You may need to install the `react-router-dom` in order for the navigation bar to work. Specifically, you can use version 5 so that the `Switch` function works (newer versions use `Router` instead) by entering `npm install react-router-dom@5`.
 
 When loading the backend, you can create data from the `seeds.rb` file by running `bundle exec rake db:seed` and get the server up and running by entering `bundle exec rake server`. In order for the frontend to run properly, you'll want this to load on "localhost:9292". Once the server is up and running, data for students may be found at "localhost:9292/students"; course and department data can be seen at analogous endpoints ("/courses" or "/departments").
 

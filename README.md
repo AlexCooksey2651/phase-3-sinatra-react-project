@@ -2,7 +2,7 @@
 ## Alex Cooksey, Flatiron School Phase 3 Final Project
 
 ## Introduction
-This app is designed to emulate a page that would be used by a school administrator. The frontend is built with HTML, CSS, and React, while the backend is built with Ruby and Sinatra. 
+This app is designed to emulate a page that would be used by a school administrator to manage student enrollment, the school's departments, and its course catalog. The frontend is built with HTML, CSS, and React, while the backend is built with Ruby and Sinatra. 
 
 The Home page gives a brief overview of functionality and helps the user navigate the app. 
 
